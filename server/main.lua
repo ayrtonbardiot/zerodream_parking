@@ -30,8 +30,7 @@ if Config.impound.command then
                     print(_U('IMPOUND_INVALID_ARGS'))
                 end
             else
-                local job = GetPlayerJob(_source)
-                if IsInTable(Config.impound.job, job) then
+                if IsWhiteListPlayer(Config.impound.whitelist, _source) then
                     local plate = table.concat(args, ' ')
                     if plate then
                         ImpoundVehicle(_source, GetCleanPlateNumber(plate))
@@ -104,8 +103,7 @@ end
 
 RegisterServerCallback('zerodream_parking:impoundVehicle', function(source, cb, plate)
     local _source = source
-    local job     = GetPlayerJob(_source)
-    if IsInTable(Config.impound.job, job) then
+    if IsWhiteListPlayer(Config.impound.whitelist, _source) then
         local _plate = GetCleanPlateNumber(plate)
         local result = ImpoundVehicle(_source, _plate)
         cb({
@@ -298,7 +296,7 @@ RegisterServerCallback('zerodream_parking:driveOutVehicle', function(source, cb,
             local playerMoney = GetPlayerMoney(_source)
             local checker     = IsAllowedDrive(_source, result[1].parking, result[1].plate)
             if checker.allowed then
-                if Config.framework == 'standalone' or IsWhiteListPlayer(result[1].parking, _source) then
+                if Config.framework == 'standalone' or IsWhiteListPlayer((result[1].parking == 'global' and Config.globalParking or (Config.parking[result[1].parking] or { whitelist = {} })).whitelist, _source) then
                     parkingFee = 0
                 end
                 if playerMoney >= parkingFee then
