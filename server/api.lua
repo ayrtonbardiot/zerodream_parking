@@ -124,25 +124,18 @@ function GetIdentifierById(player)
     end
 
     -- For Standalone
-    local identifiers = GetPlayerIdentifiers(player)
-    for _, v in ipairs(identifiers) do
-        if string.find(v, 'license:') then
-            return v
-        end
-    end
-    return nil
+    return string.match(GetPlayerIdentifierByType(player, 'license') or '', 'license:(%w+)')
 end
 
 -- Check if player is in whitelist
--- Args: (string) parking, (number) player
+-- Args: (table) principal, (number) player
 -- Return: boolean
-function IsWhiteListPlayer(parking, player)
-    local identifier  = GetIdentifierById(player)
+function IsWhiteListPlayer(principal, player)
+    local identifiers = GetPlayerIdentifiers(player)
     local ip          = GetPlayerEndpoint(player)
     local job         = GetPlayerJob(player)
-    local parkingData = parking == 'global' and Config.globalParking or (Config.parking[parking] or { whitelist = {} })
-    for k, v in pairs(parkingData.whitelist) do
-        if v == string.format('identifier.%s', identifier) or v == string.format('ip.%s', ip) or v == string.format('job.%s', job) then
+    for k, v in pairs(principal) do
+        if IsInTable(identifiers, v:match('identifier.(%g+)')) or v == string.format('ip.%s', ip) or v == string.format('job.%s', job) then
             return true
         end
     end

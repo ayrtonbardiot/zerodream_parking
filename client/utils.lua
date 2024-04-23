@@ -65,7 +65,7 @@ function GetCurrentParkingCar()
 end
 
 function GetCleanPlateNumber(plate)
-    return plate and plate:gsub("%s+", "") or ""
+    return plate and plate:match("^%s*(.-)%s*$") or ""
 end
 
 function QuickVehicleHorn(vehicle, num)

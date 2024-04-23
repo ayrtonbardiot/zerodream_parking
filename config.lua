@@ -9,6 +9,9 @@ Config = {
     -- Which framework you are using, can be 'standalone', 'esx', 'esx1.9' or 'qbcore'
     framework   = 'standalone',
 
+    -- Compatible with zerodream_vehplate script (0: only GTA plate, 1: only Chinese plate, 2: all)
+    plateType = 0,
+
     -- Require stop the engine before parking car?
     stopEngine  = true,
 
@@ -42,7 +45,11 @@ Config = {
     -- Impound settings
     impound     = {
         command = 'impound',
-        job     = { 'police', 'admin' },
+        whitelist  = {
+            'identifier.steam:110000131d62281',
+            'ip.127.0.0.1',
+            'job.admin',
+        },
     },
 
     -- Parking setting

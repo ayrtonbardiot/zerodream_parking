@@ -95,7 +95,7 @@ end
 
 -- Get clean plate number
 function GetCleanPlateNumber(plate)
-    return plate and plate:gsub("%s+", "") or ""
+    return plate and plate:match("^%s*(.-)%s*$") or ""
 end
 
 -- Get parking fee

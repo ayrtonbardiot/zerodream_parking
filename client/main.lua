@@ -423,7 +423,13 @@ Citizen.CreateThread(function()
             local vehNames  = GetLabelText(GetDisplayNameFromVehicleModel(_g.closeVehicle.props.model))
             local ownerName = _g.closeVehicle.name
             local parkFees  = GetParkingFeeByCar(_g.closeVehicle)
-            AdvancedDrawText3D(position, _UF('VEHICLE_INFO', vehNames, ownerName, _g.closeVehicle.plate, parkFees))
+            local plate = _g.closeVehicle.plate
+            if Config.plateType == 1 then
+                plate = exports.zerodream_vehplate:GetPlateByGtaPlate(_g.closeVehicle.plate)[1]
+            elseif Config.plateType == 2 then
+                plate = ('%s(%s)'):format(exports.zerodream_vehplate:GetPlateByGtaPlate(_g.closeVehicle.plate)[1], _g.closeVehicle.plate)
+            end
+            AdvancedDrawText3D(position, _UF('VEHICLE_INFO', vehNames, ownerName, plate, parkFees))
         else
             Wait(500)
         end
