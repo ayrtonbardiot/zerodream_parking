@@ -1,0 +1,28 @@
+Locales = Locales or {}
+
+Locales['fr'] = {
+    ['PRESS_TO_SAVE_VEHICLE']  = "Appuyez sur %s pour sauvegarder votre vehicule",
+    ['PRESS_TO_TAKE_VEHICLE']  = "Appuyez sur %s pour conduire votre vehicule",
+    ['PRESS_TO_STOP_ENGINE']   = "Appuyez sur %s pour arreter le moteur",
+    ['PRESS_TO_PAY_PARK_FEE']  = "Appuyez sur %s pour payer ~g~$%s~s~ de frais de parking",
+    ['IMPOUND_INVALID_ARGS']   = "Argument invalide, utilisez /impound <plaque>",
+    ['NOT_ALLOWED_PERMISSION'] = "Vous n'avez pas la permission d'utiliser cette commande",
+    ['KEY_ENGINE_CONTROL']     = "Touche pour le moteur (allume/eteint)",
+    ['KEY_PARKING_VEHICLES']   = "Touche pour garer votre vehicule",
+    ['NOT_IN_DRIVER_SEAT']     = "Vous devez être assis sur le siege du conducteur pour effectuer cette operation.",
+    ['VEHICLE_ALREADY_PARKED'] = "Un vehicule portant la même plaque est deja gare sur ce parking.",
+    ['VEHICLE_PARKED_SUCCESS'] = "Votre vehicule a ete sauvegarde avec succes",
+    ['FIND_VEHICLE_INVALID']   = "Argument invalide, utilisez /findveh <plaque>",
+    ['VEHICLE_NOT_FOUND']      = "Impossible de trouver ce vehicule",
+    ['VEHICLE_FOUND']          = "Un point a ete ajoute a votre vehicule",
+    ['VEHICLE_NOT_ALLOWED']    = "Vous ne pouvez pas vous garer ici",
+    ['VEHICLE_NOT_OWNED']      = "Vous n'etes pas le proprietaire de cette voiture",
+    ['ERROR_PARKING_FULL']     = "Vous ne pouvez pas vous garer ici car il y a trop de vehicules",
+    ['NOT_ENOUGH_MONEY']       = "Vous n'avez pas assez d'argent pour payer les frais de parking, vous devez payer $%s",
+    ['VEHICLE_TAKE_SUCCESS']   = "Vous pouvez desormais conduire votre vehicule",
+    ['VEHICLE_PAID_SUCCESS']   = "Vous avez paye ~g~$%d~s~ et vous pouvez maintenant conduire votre vehicule",
+    ['IMPOUND_SUCCESS']        = "La voiture a ete mise en fourriere",
+    ['STOP_ENGINE_FIRST']      = "Vous devez arreter le moteur",
+    ['VEHICLE_INFO']           = "~r~%s~s~\n~y~Proprietaire:~s~ %s~s~\n~g~Plaque:~s~ %s\n~b~Frais: ~s~$%s~s~",
+    ['VEHICLE_IS_MOVING']      = "Vous devez arreter la voiture avant de la garer",
+}
