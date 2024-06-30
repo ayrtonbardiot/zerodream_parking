@@ -6,7 +6,9 @@ A car parking script for FiveM
 [![image](https://user-images.githubusercontent.com/34357771/210299479-b71f3ad1-b08b-4189-a0ec-9374a259d23c.png)](https://youtu.be/UH77hUi-KkI)
 
 ## Features
-
+- **NEW!** Add blips on Map/Minimap to easily locate your vehicles.
+- **NEW!** New locale : FR
+- Locales system : EN/ES/ZH
 - Store the car like the real life, the car will not disappear when you are offline.
 - Standalone script, it can use without framework.
 - ESX / QBCore or other custom framework support.
