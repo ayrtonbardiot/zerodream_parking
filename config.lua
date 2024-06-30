@@ -3,8 +3,8 @@ Config = {
     -- Debug mode
     debug       = false,
 
-    -- Locale (en / zh / es)
-    locale      = 'en',
+    -- Locale (en / zh / es / fr)
+    locale      = 'fr',
 
     -- Which framework you are using, can be 'standalone', 'esx', 'esx1.9' or 'qbcore'
     framework   = 'standalone',
@@ -67,7 +67,7 @@ Config = {
             -- Allow vehicle class, can be find here: https://docs.fivem.net/natives/?_0x29439776AAA00A62 (use -1 means all, use , to separate multiple types)
             allowTypes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, -- if you want to allow all class, change to { -1 },
             -- Parking fee per day in real life time
-            parkingFee = 1000,
+            parkingFee = 0,
             -- Display notification?
             notify     = true,
             -- White list, can be identifier, ip and job name, player will not need to pay parking fee if they are in the whitelist
@@ -95,7 +95,7 @@ Config = {
         -- Render distance
         distance   = 50.0,
         -- Parking fee per day in real life time
-        parkingFee = 1000,
+        parkingFee = 0,
         -- white list, can be identifier, ip and job name, player will not need to pay parking fee if they are in the whitelist
         whitelist  = {
             'identifier.steam:110000131d62281',
