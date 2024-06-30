@@ -164,12 +164,27 @@ AddEventHandler('zerodream_parking:ready', function()
             }
         end
     end
+    TriggerClientEvent('zerodream_parking:addVehiclesBlips', _source)
     TriggerLatentClientEvent('zerodream_parking:syncParkingVehicles', _source, 1024000, os.time(), vehicles)
 end)
 
 RegisterServerEvent('zerodream_parking:syncDamage')
 AddEventHandler('zerodream_parking:syncDamage', function(netId, damage)
     TriggerLatentClientEvent('zerodream_parking:syncDamage', -1, 1024000, netId, damage)
+end)
+
+RegisterServerCallback('zerodream_parking:getPlayerVehicles', function(source, cb)
+    DebugPrint("getPlayerVehicles event received")
+    local identifier = GetPlayerIdentifierByType(source, 'license')
+    local result = MySQL.query.await('SELECT plate, position FROM parking_vehicles WHERE owner = @owner', {
+        ['@owner'] = identifier,
+    })
+    if result then
+        cb({
+            success = true,
+            vehicles = result
+        })
+    end
 end)
 
 RegisterServerCallback('zerodream_parking:findVehicle', function(source, cb, plate)
@@ -310,6 +325,7 @@ RegisterServerCallback('zerodream_parking:driveOutVehicle', function(source, cb,
                         cb({
                             success = true,
                             message = parkingFee > 0 and _UF('VEHICLE_PAID_SUCCESS', parkingFee) or _U('VEHICLE_TAKE_SUCCESS'),
+                            plate   = _plate
                         })
                         -- Notify all clients
                         TriggerLatentClientEvent('zerodream_parking:removeParkingVehicle', -1, 1024000, result[1].parking, _plate)

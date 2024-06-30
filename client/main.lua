@@ -2,6 +2,7 @@ _g = {
     clientCallbacks   = {},
     parkingVehicles   = {},
     currentCallbackId = 0,
+    blips             = {}
 }
 
 function InitCommands()
@@ -166,6 +167,7 @@ function ParkingAction(parkingName, vehicle)
                     if result.success then
                         FreezeEntityPosition(vehicle, true)
                         SetEntityCompletelyDisableCollision(vehicle, true, false)
+                        AddBlip({ x = payload.position.x, y = payload.position.y, z = payload.position.z }, payload.plate)
                         Wait(500)
                         if _g.parkingVehicles[parkingName] and _g.parkingVehicles[parkingName][payload.plate] then
                             local parkingTemp = _g.parkingVehicles[parkingName][payload.plate]
@@ -200,6 +202,7 @@ function ParkingAction(parkingName, vehicle)
                 SetVehicleDoorsLocked(vehicle, 0)
                 SetVehicleDoorsLockedForAllPlayers(vehicle, false)
                 SetVehicleUndriveable(vehicle, false)
+                DeleteBlip(result.plate)
                 _g.ignoreEntity = NetworkGetNetworkIdFromEntity(vehicle)
                 TriggerLatentServerEvent('zerodream_parking:syncDamage', 1024000, _g.ignoreEntity, GetVehicleDamageData(vehicle))
             end
@@ -249,6 +252,51 @@ function FindVehicle(plate)
         SendNotification(result.message)
     end, plate)
 end
+
+function all_trim(s)
+    return s:match( "^%s*(.-)%s*$" )
+end
+
+function AddBlip(coords, plate)
+    plate = all_trim(plate)
+    DebugPrint("Adding blip for coords : " .. coords.x .. " / " .. coords.y .. " / " .. coords.z)
+    local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+    SetBlipSprite(blip, 225)
+    SetBlipDisplay(blip, 2)
+    SetBlipScale(blip, 1.0)
+    SetBlipColour(blip, 83)
+    SetBlipAsShortRange(blip, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString("Vehicle - " .. plate)
+    EndTextCommandSetBlipName(blip)
+    table.insert(_g.blips, { blip = blip, plate = plate })
+end
+
+function DeleteBlip(plate)
+    plate = all_trim(plate)
+    for i, blip in ipairs(_g.blips) do
+        if blip.plate == plate then
+            RemoveBlip(blip.blip)
+            table.remove(_g.blips, i)
+            break
+        end
+    end
+end
+
+RegisterNetEvent('zerodream_parking:addVehiclesBlips')
+AddEventHandler('zerodream_parking:addVehiclesBlips', function(src)
+    DebugPrint("addVehicles blip event")
+    TriggerServerCallback('zerodream_parking:getPlayerVehicles', function(result)
+        if result.success then
+            DebugPrint("Adding vehicles blips")
+            for i = 1, #result.vehicles do
+                local row = result.vehicles[i]
+                local position = json.decode(row.position)
+                AddBlip({ x = position.x, y = position.y, z = position.z }, row.plate)
+            end
+        end
+    end, src)
+end)
 
 RegisterNetEvent('zerodream_parking:syncParkingVehicles')
 AddEventHandler('zerodream_parking:syncParkingVehicles', function(serverTime, vehicles)
